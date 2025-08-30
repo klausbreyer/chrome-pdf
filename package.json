@@ -1,0 +1,25 @@
+{
+  "type": "module",
+  "name": "chrome-pdf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pdf": "node --loader ts-node/esm automation.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pdf-lib": "^1.17.1",
+    "puppeteer": "^24.17.1",
+    "yargs": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "@types/yargs": "^17.0.33",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
