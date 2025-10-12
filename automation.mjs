@@ -203,15 +203,6 @@ async function mergePdfs(inFiles, outFile) {
   await fs.promises.writeFile(outFile, outBytes);
 }
 
-// Hilfsfunktion für Zeitstempel
-function timestamp() {
-  const d = new Date();
-  const pad = (n) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}-${pad(
-    d.getHours()
-  )}-${pad(d.getMinutes())}`;
-}
-
 async function main() {
   const tmpRoot = await fs.promises.mkdtemp(
     path.join(os.tmpdir(), argv.tmpPrefix)
@@ -325,13 +316,8 @@ async function main() {
   results.sort((a, b) => a.start - b.start);
   const files = results.map((r) => r.filePath);
   await ensureDir(path.dirname(OUT));
-  // Zieldatei mit Zeitstempel
-  const ext = path.extname(OUT);
-  const base = path.basename(OUT, ext);
-  const dir = path.dirname(OUT);
-  const stampedOut = path.join(dir, `${base}-${timestamp()}${ext}`);
 
-  await mergePdfs(files, stampedOut);
+  await mergePdfs(files, OUT);
 
   try {
     await fs.promises.rm(tmpRoot, {recursive: true, force: true});
@@ -342,7 +328,7 @@ async function main() {
   const last = lastBlock.start + lastBlock.pages - 1;
   const totalPages = results.reduce((sum, r) => sum + r.pages, 0);
 
-  console.log(`Fertig: ${stampedOut}`);
+  console.log(`Fertig: ${OUT}`);
   console.log(
     `Seiten: ${totalPages} (Bereich ${first}–${last}), Chunks: ${results.length}, Parallel: ${CONC}`
   );
