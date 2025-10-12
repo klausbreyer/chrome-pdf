@@ -19,7 +19,7 @@ GS_OPTS = -dSAFER -dBATCH -dNOPAUSE \
   -dAutoFilterGrayImages=false \
   -dGrayImageFilter=/DCTEncode
 
-render:
+start:
 	@TIMESTAMP=$$(date +%Y-%m-%d-%H-%M); \
 	OUT="$(OUT_DIR)/combined-$$TIMESTAMP.pdf"; \
 	node automation.mjs "$(RENDER_URL)" -o "$$OUT" -k 10 -c 3; \
@@ -29,12 +29,12 @@ render:
 cmyk:
 	@FILE=$$(cat .last_output 2>/dev/null || true); \
 	if [ -z "$$FILE" ] || [ ! -f "$$FILE" ]; then \
-	  echo "No source PDF found. Run 'make render' or 'make start' first."; exit 1; \
+	  echo "No source PDF found. Run 'make start' or 'make start' first."; exit 1; \
 	fi; \
 	OUT_CMYK="$${FILE%.pdf}_cmyk.pdf"; \
 	gs $(GS_OPTS) -sOutputFile="$$OUT_CMYK" "$$FILE"; \
 	echo "CMYK: $$OUT_CMYK"
 
-start:
-	@$(MAKE) render
+magic:
+	@$(MAKE) start
 	@$(MAKE) cmyk
