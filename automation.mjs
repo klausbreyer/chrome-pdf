@@ -160,6 +160,7 @@ function isRangeExceedsError(err) {
 async function openPreparedPage(browser) {
   const page = await browser.newPage();
   page.setDefaultNavigationTimeout(argv.timeout);
+  page.setDefaultTimeout(Math.max(argv.timeout * 3, 60000)); // PDF generation needs more time
   log(`Lade Seite: ${URL} (waitUntil=${argv.waitUntil}) ...`);
   await page.goto(URL, {waitUntil: argv.waitUntil, timeout: argv.timeout});
   if (argv.cssPrint) {
