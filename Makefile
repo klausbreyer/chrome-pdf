@@ -2,7 +2,7 @@
 
 # Config
 RENDER_URL ?= http://localhost:1313
-OUT_DIR    ?= /Users/kb0/stick
+OUT_DIR    ?= /Users/kb0/Downloads
 
 # Ghostscript options for high-quality CMYK PDF
 GS_OPTS = -dSAFER -dBATCH -dNOPAUSE \
